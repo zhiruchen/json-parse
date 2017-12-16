@@ -1,0 +1,22 @@
+type: 2 lexeme: [ literal: <nil>
+type: 6 lexeme: "1" literal: 1
+type: 5 lexeme: , literal: <nil>
+type: 7 lexeme: 1234 literal: 1234
+type: 5 lexeme: , literal: <nil>
+type: 0 lexeme: { literal: <nil>
+type: 6 lexeme: "a" literal: a
+type: 4 lexeme: : literal: <nil>
+type: 7 lexeme: 1 literal: 1
+type: 5 lexeme: , literal: <nil>
+type: 6 lexeme: "b" literal: b
+type: 4 lexeme: : literal: <nil>
+type: 7 lexeme: 2 literal: 2
+type: 1 lexeme: } literal: <nil>
+type: 5 lexeme: , literal: <nil>
+type: 10 lexeme: null literal: null
+type: 5 lexeme: , literal: <nil>
+type: 8 lexeme: true literal: true
+type: 5 lexeme: , literal: <nil>
+type: 9 lexeme: false literal: false
+type: 3 lexeme: ] literal: <nil>
+type: 11 lexeme:  literal: <nil>

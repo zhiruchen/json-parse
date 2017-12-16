@@ -2,12 +2,12 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 
-	"fmt"
-
-	"github.com/zhiruchen/json-parse/parse"
+	"github.com/zhiruchen/json-parse/parser"
+	"github.com/zhiruchen/json-parse/scanner"
 )
 
 func readFile(path string) (string, error) {
@@ -19,26 +19,27 @@ func readFile(path string) (string, error) {
 }
 
 func main() {
-	jsonPath := flag.String("jsonPath", "", "json文件路径")
+	jsonPath := flag.String("path", "", "json文件路径")
 	flag.Parse()
 
 	s, err := readFile(*jsonPath)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	tokener, err1 := parse.NewJSONTokener(s)
-	if err1 != nil {
-		log.Fatalln(err1)
-	}
-	obj, err2 := parse.NewJSONObject(tokener)
-	if err2 != nil {
-		log.Fatalln(err2)
-	}
-	log.Printf("%v\n", obj)
 
-	v, err3 := obj.GetValue("a")
-	fmt.Printf("%v, %v\n", v, err3)
+	scanErrfunc := func(line int, msg string) {
+		log.Fatalf("scanner error %d: %s\n", line, msg)
+	}
 
-	v, err3 = obj.GetValue("e.h.q")
-	fmt.Printf("%v, %v\n", v, err3)
+	sc := scanner.NewScanner(s, scanErrfunc)
+	tokens := sc.ScanTokens()
+
+	errFunc := func(name, msg string) {
+		log.Fatalf("parser error %s: %s\n", name, msg)
+	}
+
+	pser := parser.NewParser(tokens, errFunc)
+	js := pser.Parse()
+
+	fmt.Printf(js.Represent())
 }
