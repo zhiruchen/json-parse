@@ -3,7 +3,6 @@ package scanner
 import (
 	"fmt"
 	"strconv"
-
 	"github.com/zhiruchen/json-parse/token"
 )
 
@@ -200,7 +199,7 @@ func isDigits(c rune) bool {
 }
 
 func isAlpha(c rune) bool {
-	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_'
+	return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c == '_'
 }
 
 func isAlphaNumberic(c rune) bool {

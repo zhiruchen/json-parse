@@ -2,6 +2,7 @@ package parser
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 
 	"github.com/zhiruchen/json-parse/token"
@@ -54,6 +55,23 @@ func (obj JSONObject) Represent() string {
 
 	buf.WriteString("\n" + blankSpace + "}")
 	return buf.String()
+}
+
+func (obj JSONObject) GetValue(path ...string) (interface{}, error) {
+	if len(path) == 0 {
+		return obj, nil
+	}
+
+	subObj := obj[path[0]]
+	if subObj == nil || len(path[1:]) == 0 {
+		return subObj, nil
+	}
+
+	if v, ok := subObj.(JSONObject); ok {
+		return v.GetValue(path[1:]...)
+	}
+
+	return nil, errors.New(fmt.Sprintf("%v is not a json object", subObj))
 }
 
 type pair struct {
