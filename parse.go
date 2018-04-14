@@ -3,10 +3,11 @@ package json_parse
 import (
 	"io"
 	"fmt"
+	"errors"
+	"bytes"
 
 	"github.com/zhiruchen/json-parse/parser"
 	"github.com/zhiruchen/json-parse/scanner"
-	"errors"
 )
 
 var (
@@ -35,13 +36,13 @@ func GetValue(r io.Reader, path ...string) (interface{}, error) {
 
 // GetJSONObject get json object from reader
 func GetJSONObject(r io.Reader) (parser.JSONer, error) {
-	var bs []byte
-	_, err := r.Read(bs)
+	var buf  = &bytes.Buffer{}
+	_, err := buf.ReadFrom(r)
 	if err != nil {
 		return nil, err
 	}
 
-	sc := scanner.NewScanner(string(bs), scanErrorFunc)
+	sc := scanner.NewScanner(buf.String(), scanErrorFunc)
 	tokens := sc.ScanTokens()
 
 	p := parser.NewParser(tokens, parseErrorFunc)
