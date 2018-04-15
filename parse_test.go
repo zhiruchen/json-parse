@@ -1,42 +1,42 @@
 package json_parse
 
 import (
-	"testing"
 	"bytes"
+	"testing"
+	"reflect"
 
 	"github.com/zhiruchen/json-parse/parser"
-	"reflect"
 )
 
 func TestGetValue(t *testing.T) {
-	testCases := []struct{
-		js string
-		path []string
+	testCases := []struct {
+		js     string
+		path   []string
 		result interface{}
 	}{
 		{
-			js: `{"A":"a", "B": {"C":1, "D":2}, "E":9}`,
-			path: []string{"A"},
+			js:     `{"A":"a", "B": {"C":1, "D":2}, "E":9}`,
+			path:   []string{"A"},
 			result: "a",
 		},
 		{
-			js: `{"A":"a", "B": {"C":1, "D":2}, "E":9}`,
-			path: []string{"B", "D"},
+			js:     `{"A":"a", "B": {"C":1, "D":2}, "E":9}`,
+			path:   []string{"B", "D"},
 			result: float64(2),
 		},
 		{
-			js: `{"A":"a", "B": {"C":1, "D":2}, "E":9}`,
-			path: []string{"A", "B", "E"},
+			js:     `{"A":"a", "B": {"C":1, "D":2}, "E":9}`,
+			path:   []string{"A", "B", "E"},
 			result: nil,
 		},
 		{
-			js: `{"A":"a", "B": {"C":1, "D":2}, "E":9}`,
-			path: []string{"B", "C"},
+			js:     `{"A":"a", "B": {"C":1, "D":2}, "E":9}`,
+			path:   []string{"B", "C"},
 			result: float64(1),
 		},
 		{
-			js: `{"A":"a", "B": {"C":1, "D":2}, "E":9}`,
-			path: []string{"A", "B", "c"},
+			js:     `{"A":"a", "B": {"C":1, "D":2}, "E":9}`,
+			path:   []string{"A", "B", "c"},
 			result: nil,
 		},
 	}
@@ -50,8 +50,8 @@ func TestGetValue(t *testing.T) {
 }
 
 func TestGetJSONObject(t *testing.T) {
-	testCases := []struct{
-		js string
+	testCases := []struct {
+		js     string
 		result parser.JSONer
 	}{
 		{
@@ -62,7 +62,7 @@ func TestGetJSONObject(t *testing.T) {
 					"C": float64(1),
 					"D": float64(2),
 					"F": parser.JSONObject{
-						"J":"SQ",
+						"J": "SQ",
 						"Y": float64(100000),
 					},
 				},
@@ -85,9 +85,9 @@ func TestGetJSONObject(t *testing.T) {
 				"x",
 				"y",
 				parser.JSONObject{
-					"A":"a",
+					"A": "a",
 					"B": "b",
-					"C": parser.JSONArray{float64(11),float64(12),float64(13)},
+					"C": parser.JSONArray{float64(11), float64(12), float64(13)},
 				},
 			},
 		},
