@@ -1,5 +1,10 @@
 # json parse
 
+## 解析流程
+![Json Parse](json_parse.png)
+
+## example
+
 ```go
 package main
 
